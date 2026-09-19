@@ -52,13 +52,19 @@ function SwitcherActions({ cycle }: { cycle: (d: 1 | -1) => void }) {
       <Action
         title="Next Variant"
         icon={Icon.ArrowRight}
-        shortcut={{ modifiers: ["cmd"], key: "]" }}
+        shortcut={{
+          macOS: { modifiers: ["cmd"], key: "]" },
+          Windows: { modifiers: ["ctrl", "shift"], key: "arrowRight" },
+        }}
         onAction={() => cycle(1)}
       />
       <Action
         title="Previous Variant"
         icon={Icon.ArrowLeft}
-        shortcut={{ modifiers: ["cmd"], key: "[" }}
+        shortcut={{
+          macOS: { modifiers: ["cmd"], key: "[" },
+          Windows: { modifiers: ["ctrl", "shift"], key: "arrowLeft" },
+        }}
         onAction={() => cycle(-1)}
       />
     </ActionPanel.Section>
