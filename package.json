@@ -16,6 +16,21 @@
   ],
   "commands": [
     {
+      "name": "prototype-ask-ai",
+      "title": "Prototype: Ask AI Companion",
+      "subtitle": "Local AI Gateway (throwaway)",
+      "description": "PROTOTYPE. Three ChatGPT-companion-style layouts for Ask AI. Cycle with ⌘] / ⌘[.",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "prompt",
+          "placeholder": "Question (optional)",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
       "name": "ask-ai",
       "title": "Ask AI",
       "subtitle": "Local AI Gateway",
