@@ -1,0 +1,511 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "local-ai-gateway",
+  "title": "Local AI Gateway",
+  "description": "Ask Claude Code, Codex CLI, or the Anthropic/OpenAI APIs from Raycast using your existing CLI logins. Streaming, sessions, projects, agents, AI commands, memory and automations.",
+  "icon": "icon.png",
+  "author": "iamrivershenshuhe",
+  "categories": [
+    "Developer Tools",
+    "Productivity"
+  ],
+  "license": "MIT",
+  "platforms": [
+    "macOS",
+    "Windows"
+  ],
+  "commands": [
+    {
+      "name": "ask-ai",
+      "title": "Ask AI",
+      "subtitle": "Local AI Gateway",
+      "description": "Chat with Claude Code, Codex or an API provider. Streaming, multi-turn, resumable.",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "prompt",
+          "placeholder": "Question (optional)",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "quick-ai",
+      "title": "Quick AI",
+      "subtitle": "Local AI Gateway",
+      "description": "One-shot question, answer shown immediately.",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "query",
+          "placeholder": "Ask anything",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "ask-selected-text",
+      "title": "Ask Selected Text",
+      "subtitle": "Local AI Gateway",
+      "description": "Ask about the text currently selected in the frontmost app.",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "prompt",
+          "placeholder": "What to do with it (optional)",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ask-clipboard",
+      "title": "Ask Clipboard",
+      "subtitle": "Local AI Gateway",
+      "description": "Ask about the current clipboard contents.",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "prompt",
+          "placeholder": "What to do with it (optional)",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "quick-fix",
+      "title": "Quick Fix",
+      "subtitle": "Local AI Gateway",
+      "description": "Fix grammar, spelling or code in the selected text and paste the result back.",
+      "mode": "view"
+    },
+    {
+      "name": "chat-history",
+      "title": "Chat History",
+      "subtitle": "Local AI Gateway",
+      "description": "Browse, continue, pin, archive or delete past conversations.",
+      "mode": "view"
+    },
+    {
+      "name": "manage-models",
+      "title": "Manage Models & Providers",
+      "subtitle": "Local AI Gateway",
+      "description": "Detect Claude Code / Codex installs and login state, test providers, see default models.",
+      "mode": "view"
+    },
+    {
+      "name": "search-agents",
+      "title": "Search Agents",
+      "subtitle": "Local AI Gateway",
+      "description": "Browse and chat with your custom agents (persona + provider + permissions + project).",
+      "mode": "view"
+    },
+    {
+      "name": "create-agent",
+      "title": "Create Agent",
+      "subtitle": "Local AI Gateway",
+      "description": "Create a reusable agent with its own instructions, provider, model and permission mode.",
+      "mode": "view"
+    },
+    {
+      "name": "import-agents",
+      "title": "Import Agents",
+      "subtitle": "Local AI Gateway",
+      "description": "Import agents from a JSON file.",
+      "mode": "view"
+    },
+    {
+      "name": "manage-projects",
+      "title": "Projects",
+      "subtitle": "Local AI Gateway",
+      "description": "Working directories the CLI agents can read (and, with permission, edit).",
+      "mode": "view"
+    },
+    {
+      "name": "search-ai-commands",
+      "title": "Search AI Commands",
+      "subtitle": "Local AI Gateway",
+      "description": "Run prompt templates on selected text or clipboard: explain, fix, summarize, translate.",
+      "mode": "view"
+    },
+    {
+      "name": "create-ai-command",
+      "title": "Create AI Command",
+      "subtitle": "Local AI Gateway",
+      "description": "Create a prompt template with {selection}, {clipboard} and {input} placeholders.",
+      "mode": "view"
+    },
+    {
+      "name": "import-ai-commands",
+      "title": "Import AI Commands",
+      "subtitle": "Local AI Gateway",
+      "description": "Import AI commands from a JSON file.",
+      "mode": "view"
+    },
+    {
+      "name": "profile",
+      "title": "Profile",
+      "subtitle": "Local AI Gateway",
+      "description": "Context you want available in every conversation (except AI Commands).",
+      "mode": "view"
+    },
+    {
+      "name": "show-memory",
+      "title": "Show Memory",
+      "subtitle": "Local AI Gateway",
+      "description": "View and edit what the assistant remembers about you.",
+      "mode": "view"
+    },
+    {
+      "name": "import-memory",
+      "title": "Import Memory",
+      "subtitle": "Local AI Gateway",
+      "description": "Import a memory summary from a text or JSON file.",
+      "mode": "view"
+    },
+    {
+      "name": "manage-automations",
+      "title": "Manage Automations",
+      "subtitle": "Local AI Gateway",
+      "description": "Prompts that run on a schedule in the background and keep their latest result.",
+      "mode": "view"
+    },
+    {
+      "name": "create-automation",
+      "title": "Create Automation",
+      "subtitle": "Local AI Gateway",
+      "description": "Schedule a prompt to run every 15 minutes, hourly, daily or weekly.",
+      "mode": "view"
+    },
+    {
+      "name": "run-automations",
+      "title": "Run Due Automations",
+      "subtitle": "Local AI Gateway",
+      "description": "Background runner for automations (also runnable manually).",
+      "mode": "no-view",
+      "interval": "15m"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "defaultProvider",
+      "title": "Default Provider",
+      "description": "Provider used for new chats.",
+      "type": "dropdown",
+      "required": false,
+      "default": "claude-code",
+      "data": [
+        {
+          "title": "Claude Code (CLI)",
+          "value": "claude-code"
+        },
+        {
+          "title": "Codex (CLI)",
+          "value": "codex"
+        },
+        {
+          "title": "Anthropic API",
+          "value": "anthropic-api"
+        },
+        {
+          "title": "OpenAI API",
+          "value": "openai-api"
+        }
+      ]
+    },
+    {
+      "name": "cliAuthMode",
+      "title": "CLI Authentication",
+      "description": "Use the CLI's existing login (subscription quota) or inject your API key into the CLI.",
+      "type": "dropdown",
+      "required": false,
+      "default": "cli-login",
+      "data": [
+        {
+          "title": "Use existing CLI login",
+          "value": "cli-login"
+        },
+        {
+          "title": "API Key (from preferences)",
+          "value": "api-key"
+        }
+      ]
+    },
+    {
+      "name": "permissionMode",
+      "title": "Default Permission Mode",
+      "description": "Ask: answer only. Read: may read the project. Agent: may edit files. Full: may run commands.",
+      "type": "dropdown",
+      "required": false,
+      "default": "read",
+      "data": [
+        {
+          "title": "Ask (no tools)",
+          "value": "ask"
+        },
+        {
+          "title": "Read (read-only)",
+          "value": "read"
+        },
+        {
+          "title": "Agent (edit files)",
+          "value": "agent"
+        },
+        {
+          "title": "Full Agent (run commands)",
+          "value": "full"
+        }
+      ]
+    },
+    {
+      "name": "claudeModel",
+      "title": "Claude Code Model",
+      "description": "Model alias or id passed to claude --model (leave empty for CLI default).",
+      "type": "textfield",
+      "required": false,
+      "default": "",
+      "placeholder": "sonnet / opus / fable"
+    },
+    {
+      "name": "codexModel",
+      "title": "Codex Model",
+      "description": "Model passed to codex -m (leave empty for CLI default).",
+      "type": "textfield",
+      "required": false,
+      "default": "",
+      "placeholder": "gpt-5-codex"
+    },
+    {
+      "name": "claudePath",
+      "title": "Claude Executable",
+      "description": "Leave empty to auto-detect.",
+      "type": "textfield",
+      "required": false,
+      "default": "",
+      "placeholder": "/opt/homebrew/bin/claude"
+    },
+    {
+      "name": "codexPath",
+      "title": "Codex Executable",
+      "description": "Leave empty to auto-detect.",
+      "type": "textfield",
+      "required": false,
+      "default": "",
+      "placeholder": "/opt/homebrew/bin/codex"
+    },
+    {
+      "name": "anthropicApiKey",
+      "title": "Anthropic API Key",
+      "description": "Stored encrypted by Raycast. Used by the Anthropic API provider and by Claude Code when CLI Authentication is set to API Key.",
+      "type": "password",
+      "required": false
+    },
+    {
+      "name": "openaiApiKey",
+      "title": "OpenAI API Key",
+      "description": "Stored encrypted by Raycast. Used by the OpenAI API provider and by Codex when CLI Authentication is set to API Key.",
+      "type": "password",
+      "required": false
+    },
+    {
+      "name": "anthropicModel",
+      "title": "Anthropic API Model",
+      "description": "Model id for the Anthropic API provider.",
+      "type": "textfield",
+      "required": false,
+      "default": "claude-opus-5"
+    },
+    {
+      "name": "openaiModel",
+      "title": "OpenAI API Model",
+      "description": "Model id for the OpenAI API provider.",
+      "type": "textfield",
+      "required": false,
+      "default": "gpt-5"
+    },
+    {
+      "name": "saveHistory",
+      "title": "History",
+      "label": "Save chat history",
+      "description": "Keep conversations in Raycast local storage so they can be resumed.",
+      "type": "checkbox",
+      "required": false,
+      "default": true
+    },
+    {
+      "name": "historyScope",
+      "title": "Conversation History",
+      "description": "Show Quick AI and Ask AI conversations combined or keep them separate.",
+      "type": "dropdown",
+      "required": false,
+      "default": "separate",
+      "data": [
+        {
+          "title": "Separate",
+          "value": "separate"
+        },
+        {
+          "title": "Combined",
+          "value": "combined"
+        }
+      ]
+    },
+    {
+      "name": "startNewChatAfter",
+      "title": "Start New Chat",
+      "description": "Start a new chat after this much inactivity when opening Ask AI.",
+      "type": "dropdown",
+      "required": false,
+      "default": "5",
+      "data": [
+        {
+          "title": "Immediately",
+          "value": "0"
+        },
+        {
+          "title": "After 5 minutes",
+          "value": "5"
+        },
+        {
+          "title": "After 15 minutes",
+          "value": "15"
+        },
+        {
+          "title": "After 1 hour",
+          "value": "60"
+        },
+        {
+          "title": "Never",
+          "value": "-1"
+        }
+      ]
+    },
+    {
+      "name": "followUpBehavior",
+      "title": "Follow-up Behavior",
+      "description": "Queue follow-ups while the agent runs, or steer (cancel and redirect) the current run.",
+      "type": "dropdown",
+      "required": false,
+      "default": "queue",
+      "data": [
+        {
+          "title": "Queue",
+          "value": "queue"
+        },
+        {
+          "title": "Steer",
+          "value": "steer"
+        }
+      ]
+    },
+    {
+      "name": "autoArchiveDays",
+      "title": "Auto-Archive Chats",
+      "description": "Archive chats after this period of inactivity. Pinned chats never get auto-archived.",
+      "type": "dropdown",
+      "required": false,
+      "default": "0",
+      "data": [
+        {
+          "title": "Never",
+          "value": "0"
+        },
+        {
+          "title": "After 7 days",
+          "value": "7"
+        },
+        {
+          "title": "After 30 days",
+          "value": "30"
+        },
+        {
+          "title": "After 90 days",
+          "value": "90"
+        }
+      ]
+    },
+    {
+      "name": "showProviderBadge",
+      "title": "Privacy",
+      "label": "Show which provider receives each request",
+      "description": "Display the provider and model on every answer so you always know where data is sent.",
+      "type": "checkbox",
+      "required": false,
+      "default": true
+    },
+    {
+      "name": "finishToast",
+      "title": "Notifications",
+      "label": "Show a toast when a chat finishes",
+      "description": "Useful when a long agent run finishes while you look elsewhere.",
+      "type": "checkbox",
+      "required": false,
+      "default": true
+    },
+    {
+      "name": "warnDeleteChats",
+      "title": "Warnings",
+      "label": "Show warning before deleting chats",
+      "type": "checkbox",
+      "required": false,
+      "default": true,
+      "description": "Ask for confirmation before deleting a chat."
+    },
+    {
+      "name": "warnDeleteAgents",
+      "label": "Show warning before deleting agents",
+      "type": "checkbox",
+      "required": false,
+      "default": true,
+      "description": "Ask for confirmation before deleting an agent."
+    },
+    {
+      "name": "warnDeleteCommands",
+      "label": "Show warning before deleting AI commands",
+      "type": "checkbox",
+      "required": false,
+      "default": true,
+      "description": "Ask for confirmation before deleting or hiding an AI command."
+    },
+    {
+      "name": "warnDeleteAutomations",
+      "label": "Show warning before deleting automations",
+      "type": "checkbox",
+      "required": false,
+      "default": true,
+      "description": "Ask for confirmation before deleting an automation."
+    },
+    {
+      "name": "maxContextChars",
+      "title": "Max Context Characters",
+      "description": "Selected text, clipboard or file content longer than this is truncated before sending.",
+      "type": "textfield",
+      "required": false,
+      "default": "40000"
+    }
+  ],
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.127.0",
+    "@raycast/api": "^2.4.1",
+    "@raycast/utils": "^2.3.1",
+    "openai": "^7.19.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^2.2.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.6.0"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "lint": "ray lint",
+    "fix-lint": "ray lint --fix",
+    "typecheck": "tsc --noEmit"
+  }
+}
